@@ -13,10 +13,20 @@
                     }
                     return(
                         `
-                        <p>Hello ${this.state.message}</p>
+                        ${new Test2(this.state).createDOM()}
                         <ul>
                             ${list}
                         </ul>
+                        `
+                    )
+                }
+            }
+
+            class Test2 extends Popcorn{
+                render(){
+                    return(
+                        `
+                        <p>Hello ${this.state.message}</p>
                         `
                     )
                 }
@@ -30,10 +40,12 @@
             function swapData(country){
                 if(country == 'western'){
                     test.setState({
+                        message: "World",
                         data: ['Tesla', 'BMW', 'McLaren']
                     })
                 }else{
                     test.setState({
+                        message: "Ching Chong",
                         data: ['Honda', 'Perodua', 'Proton']
                     })
                 }
