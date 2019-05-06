@@ -1,0 +1,44 @@
+<html>
+    <body>
+        <div class="test"></div>
+        <button onclick="swapData('western');">Western</button>
+        <button onclick="swapData('asian');">Asian</button>
+        <script src="index.js"></script>
+        <script>
+            class Test extends Popcorn{
+                render(){
+                    let list = "";
+                    for(let i=0; i<this.state.data.length; i++){
+                        list += `<li>${this.state.data[i]}</li>`
+                    }
+                    return(
+                        `
+                        <p>Hello ${this.state.message}</p>
+                        <ul>
+                            ${list}
+                        </ul>
+                        `
+                    )
+                }
+            }
+
+            let test = new Test('.test',{
+                message: 'World',
+                data: ['Tesla', 'BMW', 'McLaren']
+            });
+
+            function swapData(country){
+                if(country == 'western'){
+                    test.setState({
+                        data: ['Tesla', 'BMW', 'McLaren']
+                    })
+                }else{
+                    test.setState({
+                        data: ['Honda', 'Perodua', 'Proton']
+                    })
+                }
+                
+            }
+        </script>
+    </body>
+</html>
