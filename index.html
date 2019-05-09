@@ -1,10 +1,22 @@
 <html>
     <body>
         <div class="test"></div>
+        <div class="input"></div>
         <button onclick="swapData('western');">Western</button>
         <button onclick="swapData('asian');">Asian</button>
         <script src="index.js"></script>
         <script>
+            class Input extends Popcorn{
+                render(){
+                    this.loadKernel({
+                        inputFn: (text) => {
+                            console.log(text);
+                        },
+                    });
+                    return `<input oninput="kernel.inputFn(this.value)">`
+                }
+            }
+
             class Test extends Popcorn{
                 render(){
                     let list = "";
@@ -36,6 +48,8 @@
                 message: 'World',
                 data: ['Tesla', 'BMW', 'McLaren']
             });
+
+            let input = new Input('.input');
 
             function swapData(country){
                 if(country == 'western'){

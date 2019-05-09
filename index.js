@@ -67,6 +67,16 @@ class Popcorn{
         }
     }
 
+    loadKernel(kernel){
+        if(!window.kernel)
+            window.kernel = {};
+
+        window.kernel = {
+            ...window.kernel,
+            ...kernel
+        }
+    }
+
     setState(states){
         for(var prop in states) {
             this.state[prop] = states[prop];
@@ -75,7 +85,13 @@ class Popcorn{
         /**
          * To rerender after setState
          */
+        if(this.willRerender)
+            this.willRerender();
+
         this.Render = this.render();
         this.createDOM();
+
+        if(this.hasRerendered)
+            this.hasRerendered();
     }
 }
