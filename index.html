@@ -1,50 +1,16 @@
 <html>
     <body>
-        <div class="test"></div>
+        <div class="multicomponent"></div>
         <div class="input"></div>
         <button onclick="swapData('western');">Western</button>
         <button onclick="swapData('asian');">Asian</button>
         <script src="index.js"></script>
+
+        <script src="components/Input.js"></script>
+        <script src="components/ParentComponent.js"></script>
+        <script src="components/ChildComponent.js"></script>
         <script>
-            class Input extends Popcorn{
-                render(){
-                    this.loadKernel({
-                        inputFn: (text) => {
-                            console.log(text);
-                        },
-                    });
-                    return `<input oninput="kernel.inputFn(this.value)">`
-                }
-            }
-
-            class Test extends Popcorn{
-                render(){
-                    let list = "";
-                    for(let i=0; i<this.state.data.length; i++){
-                        list += `<li>${this.state.data[i]}</li>`
-                    }
-                    return(
-                        `
-                        ${new Test2(this.state).createDOM()}
-                        <ul>
-                            ${list}
-                        </ul>
-                        `
-                    )
-                }
-            }
-
-            class Test2 extends Popcorn{
-                render(){
-                    return(
-                        `
-                        <p>Hello ${this.state.message}</p>
-                        `
-                    )
-                }
-            }
-
-            let test = new Test('.test',{
+            let parentComponent = new ParentComponent('.multicomponent',{
                 message: 'World',
                 data: ['Tesla', 'BMW', 'McLaren']
             });
@@ -53,12 +19,12 @@
 
             function swapData(country){
                 if(country == 'western'){
-                    test.setState({
+                    parentComponent.setState({
                         message: "World",
                         data: ['Tesla', 'BMW', 'McLaren']
                     })
                 }else{
-                    test.setState({
+                    parentComponent.setState({
                         message: "Ching Chong",
                         data: ['Honda', 'Perodua', 'Proton']
                     })
