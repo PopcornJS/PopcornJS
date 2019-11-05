@@ -6,6 +6,7 @@ class Popcorn {
             initialState = DOMWrapper
         this.state = initialState;
         this.classes = {};
+        this.kernels = {};
 
         /**
          * Load CSS from JSON Function
@@ -88,8 +89,27 @@ class Popcorn {
         /**
          * If loadKernel exist, load the kernels into window
          */
-        if(this.loadKernel)
-            this.LoadKernelToWindow(this.loadKernel());
+        if(this.loadKernel){
+            let kernels = this.loadKernel();
+            let newKernels = {};
+            for(var k in kernels){ 
+                let token = k+"_"+Math.random().toString(36).substr(2);
+                newKernels[token] = kernels[k];
+
+                this.kernels[k] = function() {
+                    let params = "(";
+                    for (var i = 0; i < arguments.length; i++) {
+                        if(i !== 0){
+                            $params += ',';
+                        }
+                        params += arguments[i];
+                    }
+                    params += ")";
+                    return "window.kernel."+token+params;
+                }
+            }
+            this.LoadKernelToWindow(newKernels);
+        }
 
         /**
          * Checks if the render() method exists
@@ -150,7 +170,6 @@ class Popcorn {
         for (var prop in states) {
             this.state[prop] = states[prop];
         }
-
         /**
          * To rerender after setState
          */

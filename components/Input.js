@@ -10,14 +10,14 @@ class Input extends Popcorn{
 
     loadKernel(){
         return {
-            inputFn: (text) => {
-                console.log(text);
+            inputFn: (e) => {
+                this.thisInput = e.value;
+                console.log(this.thisInput);
             },
         }
     }
     
     render(){
-        
-        return `<input class='${this.classes.input}' oninput="kernel.inputFn(this.value)">`
+        return `<input class='${this.classes.input}' oninput="${this.kernels.inputFn('this')}">`
     }
 }
